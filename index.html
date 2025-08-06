@@ -12,7 +12,7 @@
 
     body {
       overflow: hidden;
-      font-family: 'Segoe Script', cursive;
+      font-family: 'Times New Roman', cursive;
     }
 
     video#bg-video {
@@ -42,13 +42,14 @@
 
     .falling-text {
       color: #ff69b4;
-      font-size: 24px;
-      text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+      font-size: 30px;
+      text-shadow: 0 0 10px #ff69b4, 0 0 28px #ff1493;
       white-space: nowrap;
+      font-style: italic;
     }
 
     .falling-heart {
-      font-size: 20px;
+      font-size: 24px;
     }
 
     .falling-image {
@@ -75,6 +76,7 @@
   <!-- Video nền -->
   <video id="bg-video" autoplay muted loop>
     <source src="background.mp4" type="video/mp4">
+    Trình duyệt của bạn không hỗ trợ video nền.
   </video>
 
   <!-- Container cho các phần tử rơi -->
@@ -82,14 +84,14 @@
 
   <!-- Nhạc nền -->
   <audio id="background-audio" loop>
-    <source src="1000-Anh-Mat.mp3" type="audio/mp3">
+    <source src="ChungTaCuaHienTai-SonTungMTP-6892340.mp3" type="audio/mp3">
+    Trình duyệt của bạn không hỗ trợ âm thanh.
   </audio>
 
   <script>
     const messages = [
-      "Ngô Kim Ngân", "Nguyễn Văn Thắng", "24/01/2025",
-      "Chúc mừng 6 tháng yêu nhauuuu", "Mãi mãi bên nhau nhaaaa",
-      "I love you", "Anh yêu em nhiều", "💖", "❤️"
+      "Chúc mừng 6 tháng yêu nhauuuu", "Em bé mãi mãi bên anh nhaaaa",
+      "I love you chụt chụt", "Anh yêu em nhiềuuuuuuuu", "💖", "❤️"
     ];
 
     const imageUrls = [
@@ -150,7 +152,7 @@
       img.style.animationDuration = 4 + Math.random() * 6 + "s";
       img.style.opacity = Math.random();
 
-      const size = 40 + Math.random() * 30; // 40-70px cho ảnh
+      const size = 100 + Math.random() * 20;
       img.style.width = size + "px";
       img.style.height = img.style.width * 3/2;
 
@@ -184,4 +186,3 @@
   </script>
 </body>
 </html>
-
