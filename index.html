@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Love Rain with Video Background</title>
+  <title>I love you so much 💖 </title>
   <style>
     * {
       margin: 0;
@@ -25,6 +25,15 @@
       z-index: -1;
     }
 
+    #zoom-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform-origin: center center;
+    }
+
     .falling-text, .falling-heart, .falling-image {
       position: absolute;
       pointer-events: none;
@@ -43,7 +52,7 @@
     }
 
     .falling-image {
-      /* Không đặt kích thước cố định, để JS điều khiển */
+      /* CSS không đặt kích thước cố định để JS có thể điều khiển */
     }
 
     @keyframes fall {
@@ -69,6 +78,9 @@
     Trình duyệt của bạn không hỗ trợ video nền.
   </video>
 
+  <!-- Container cho các phần tử rơi -->
+  <div id="zoom-container"></div>
+
   <!-- Nhạc nền -->
   <audio id="background-audio" loop>
     <source src="1000_Anh_Mat.mp3" type="audio/mp3">
@@ -83,10 +95,25 @@
     ];
 
     const imageUrls = [
-      "https://cdn-icons-png.flaticon.com/512/833/833472.png",
-      "https://cdn-icons-png.flaticon.com/512/929/929417.png",
-      "z6820572612630_4d36cd3961a2f8a14d2f9c9b15c9701f.jpg"
+      "1.jpg",
+      "2.jpg",
+      "3.jpg",
+      "4.jpg",
+      "5.jpg",
+      "6.jpg",
+      "7.jpg",
+      "8.jpg",
+      "9.jpg",
+      "10.jpg",
+      "11.jpg",
+      "12.jpg"
     ];
+
+    const zoomContainer = document.getElementById("zoom-container");
+    let zoomLevel = 1;
+    const zoomStep = 0.1;
+    const minZoom = 0.5;
+    const maxZoom = 2;
 
     function createFallingText() {
       const el = document.createElement("div");
@@ -98,7 +125,7 @@
       el.style.fontSize = 22 + Math.random() * 10 + "px";
       el.style.opacity = Math.random();
 
-      document.body.appendChild(el);
+      zoomContainer.appendChild(el);
       setTimeout(() => el.remove(), 10000);
     }
 
@@ -112,7 +139,7 @@
       heart.style.fontSize = 15 + Math.random() * 10 + "px";
       heart.style.opacity = Math.random();
 
-      document.body.appendChild(heart);
+      zoomContainer.appendChild(heart);
       setTimeout(() => heart.remove(), 10000);
     }
 
@@ -125,21 +152,11 @@
       img.style.animationDuration = 4 + Math.random() * 6 + "s";
       img.style.opacity = Math.random();
 
-      // Kích thước cho hình ảnh
-      const isSpecialImage = img.src.includes("z6820572612630_4d36cd3961a2f8a14d2f9c9b15c9701f.jpg");
-      if (isSpecialImage) {
-        const scale = 0.05 + Math.random() * 0.05; // Tỷ lệ từ 5% đến 10% kích thước gốc
-        const originalWidth = 1573;
-        const originalHeight = 2360;
-        img.style.width = (originalWidth * scale) + "px";
-        img.style.height = (originalHeight * scale) + "px";
-      } else {
-        const size = 40 + Math.random() * 30; // 40-70px cho ảnh khác
-        img.style.width = size + "px";
-        img.style.height = size + "px";
-      }
+      const size = 40 + Math.random() * 30; // 40-70px cho ảnh
+      img.style.width = size + "px";
+      img.style.height = img.style.width * 3/2;
 
-      document.body.appendChild(img);
+      zoomContainer.appendChild(img);
       setTimeout(() => img.remove(), 10000);
     }
 
@@ -148,6 +165,17 @@
       const audio = document.getElementById("background-audio");
       audio.play().catch(error => console.log("Lỗi phát âm thanh:", error));
     }
+
+    // Xử lý sự kiện cuộn chuột để phóng to/thu nhỏ
+    document.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      if (event.deltaY < 0) {
+        zoomLevel = Math.min(maxZoom, zoomLevel + zoomStep);
+      } else {
+        zoomLevel = Math.max(minZoom, zoomLevel - zoomStep);
+      }
+      zoomContainer.style.transform = `scale(${zoomLevel})`;
+    }, { passive: false });
 
     // Lắng nghe sự kiện nhấp chuột bất kỳ đâu trên trang
     document.addEventListener("click", playAudio);
