@@ -43,7 +43,7 @@
     }
 
     .falling-image {
-      /* CSS không đặt kích thước cố định để JS có thể điều khiển */
+      /* Không đặt kích thước cố định, để JS điều khiển */
     }
 
     @keyframes fall {
@@ -128,7 +128,7 @@
       // Kích thước cho hình ảnh
       const isSpecialImage = img.src.includes("z6820572612630_4d36cd3961a2f8a14d2f9c9b15c9701f.jpg");
       if (isSpecialImage) {
-        const scale = 0.05 + Math.random() * 0.1; // Tỷ lệ từ 5% đến 10% kích thước gốc
+        const scale = 0.05 + Math.random() * 0.05; // Tỷ lệ từ 5% đến 10% kích thước gốc
         const originalWidth = 1573;
         const originalHeight = 2360;
         img.style.width = (originalWidth * scale) + "px";
@@ -157,5 +157,4 @@
     setInterval(createFallingImage, 700);
   </script>
 </body>
-
 </html>
