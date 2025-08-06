@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Love Rain with Video Background</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+      font-family: 'Segoe Script', cursive;
+    }
+
+    video#bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .falling-text, .falling-heart, .falling-image {
+      position: absolute;
+      pointer-events: none;
+      animation: fall linear infinite;
+    }
+
+    .falling-text {
+      color: #ff69b4;
+      font-size: 24px;
+      text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+      white-space: nowrap;
+    }
+
+    .falling-heart {
+      font-size: 20px;
+    }
+
+    .falling-image {
+      /* CSS không đặt kích thước cố định để JS có thể điều khiển */
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100%);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(120vh);
+        opacity: 0;
+      }
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Video nền -->
+  <video id="bg-video" autoplay muted loop>
+    <source src="background.mp4" type="video/mp4">
+    Trình duyệt của bạn không hỗ trợ video nền.
+  </video>
+
+  <!-- Nhạc nền -->
+  <audio id="background-audio" loop>
+    <source src="1000_Anh_Mat.mp3" type="audio/mp3">
+    Trình duyệt của bạn không hỗ trợ âm thanh.
+  </audio>
+
+  <script>
+    const messages = [
+      "Ngô Kim Ngân", "Nguyễn Văn Thắng", "24/01/2025",
+      "Chúc mừng 6 tháng yêu nhauuuu", "Mãi mãi bên nhau nhaaaa",
+      "I love you", "Anh yêu em nhiều", "💖", "❤️"
+    ];
+
+    const imageUrls = [
+      "https://cdn-icons-png.flaticon.com/512/833/833472.png",
+      "https://cdn-icons-png.flaticon.com/512/929/929417.png",
+      "z6820572612630_4d36cd3961a2f8a14d2f9c9b15c9701f.jpg"
+    ];
+
+    function createFallingText() {
+      const el = document.createElement("div");
+      el.classList.add("falling-text");
+      el.textContent = messages[Math.floor(Math.random() * messages.length)];
+
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = 4 + Math.random() * 6 + "s";
+      el.style.fontSize = 22 + Math.random() * 10 + "px";
+      el.style.opacity = Math.random();
+
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 10000);
+    }
+
+    function createFallingHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("falling-heart");
+      heart.textContent = Math.random() > 0.5 ? "💗" : "💕";
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 3 + Math.random() * 5 + "s";
+      heart.style.fontSize = 15 + Math.random() * 10 + "px";
+      heart.style.opacity = Math.random();
+
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 10000);
+    }
+
+    function createFallingImage() {
+      const img = document.createElement("img");
+      img.classList.add("falling-image");
+      img.src = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+
+      img.style.left = Math.random() * 100 + "vw";
+      img.style.animationDuration = 4 + Math.random() * 6 + "s";
+      img.style.opacity = Math.random();
+
+      // Kích thước cho hình ảnh
+      const isSpecialImage = img.src.includes("z6820572612630_4d36cd3961a2f8a14d2f9c9b15c9701f.jpg");
+      if (isSpecialImage) {
+        const scale = 0.05 + Math.random() * 0.1; // Tỷ lệ từ 5% đến 10% kích thước gốc
+        const originalWidth = 1573;
+        const originalHeight = 2360;
+        img.style.width = (originalWidth * scale) + "px";
+        img.style.height = (originalHeight * scale) + "px";
+      } else {
+        const size = 40 + Math.random() * 30; // 40-70px cho ảnh khác
+        img.style.width = size + "px";
+        img.style.height = size + "px";
+      }
+
+      document.body.appendChild(img);
+      setTimeout(() => img.remove(), 10000);
+    }
+
+    // Hàm phát âm thanh
+    function playAudio() {
+      const audio = document.getElementById("background-audio");
+      audio.play().catch(error => console.log("Lỗi phát âm thanh:", error));
+    }
+
+    // Lắng nghe sự kiện nhấp chuột bất kỳ đâu trên trang
+    document.addEventListener("click", playAudio);
+
+    setInterval(createFallingText, 300);
+    setInterval(createFallingHeart, 500);
+    setInterval(createFallingImage, 700);
+  </script>
+</body>
+</html>
